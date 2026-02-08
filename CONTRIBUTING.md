@@ -35,7 +35,7 @@ git commit -m "Fix issue in script"
 
 Push to your fork:
 ```sh
-git push origin fix-typo-in-readme
+git push origin <your-fix-branch>
 ```
 
 Open a pull request, go to your fork and click "Compare & pull request". Explain what you changed and why.
