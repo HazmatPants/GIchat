@@ -11,20 +11,36 @@ import base64
 import requests
 from colorama import Fore, Style
 import colorama
+import os
 
 colorama.init()
 
 HOST = ""
 PORT = 8765
 
-with open("config.yaml", "r", encoding="utf-8") as f:
-    CONFIG = yaml.safe_load(f)
+if os.path.exists("config.yaml"):
+    with open("config.yaml", "r", encoding="utf-8") as f:
+        CONFIG = yaml.safe_load(f)
+else:
+    with open("config.yaml", "w", encoding="utf-8") as f:
+        config_str = (
+        "--- GIchat Server Configuration\n"
+        "# Refer to https://github.com/HazmatPants/GIchat/wiki/config.yaml\n"
+        "# for configuration options\n"
+        )
+        f.write(config_str)
 
-with open("accounts.yaml", "r", encoding="utf-8") as f:
-    ACCOUNTS = yaml.safe_load(f)
-    if ACCOUNTS is None:
-        ACCOUNTS = {}
+        print(Fore.YELLOW + f"[!] Config file not found, it was created. Please read it.", Style.RESET_ALL)
+        exit()
 
+if os.path.exists("accounts.yaml"):
+    with open("accounts.yaml", "r", encoding="utf-8") as f:
+        ACCOUNTS = yaml.safe_load(f)
+        if ACCOUNTS is None:
+            ACCOUNTS = {}
+else:
+    with open("accounts.yaml", "w", encoding="utf-8") as f:
+        f.write("---")
 def load_server_icon(path="server_icon.png") -> str | None:
     try:
         with open(path, "rb") as f:
