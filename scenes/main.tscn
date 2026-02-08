@@ -1,0 +1,465 @@
+[gd_scene format=3 uid="uid://dw01fheg5p5oq"]
+
+[ext_resource type="Script" uid="uid://bnjg1tarxrovs" path="res://scripts/main.gd" id="1_o5qli"]
+[ext_resource type="Script" uid="uid://bs7d0gf05stor" path="res://scripts/text_input.gd" id="2_0wfyh"]
+[ext_resource type="Script" uid="uid://0fgoo54vdx70" path="res://scripts/auth.gd" id="3_sugp2"]
+[ext_resource type="Script" uid="uid://dvdtujrq6j8cl" path="res://scripts/add_server.gd" id="4_jyhfs"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_o5qli"]
+content_margin_left = 8.0
+content_margin_top = 8.0
+content_margin_right = 8.0
+content_margin_bottom = 8.0
+bg_color = Color(0.038397167, 0.038397167, 0.03839716, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.19076243, 0.19076228, 0.19076234, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_sgp6g"]
+content_margin_left = 8.0
+content_margin_top = 8.0
+content_margin_right = 8.0
+content_margin_bottom = 8.0
+bg_color = Color(0.038397167, 0.038397167, 0.03839716, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.19076243, 0.19076228, 0.19076234, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jyhfs"]
+content_margin_left = 8.0
+content_margin_top = 8.0
+content_margin_right = 8.0
+content_margin_bottom = 8.0
+bg_color = Color(0.038397167, 0.038397167, 0.03839716, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.19076243, 0.19076228, 0.19076234, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tbgi4"]
+content_margin_left = 8.0
+content_margin_top = 8.0
+content_margin_right = 8.0
+content_margin_bottom = 8.0
+bg_color = Color(0, 0, 0, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.19076243, 0.19076228, 0.19076234, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tefeu"]
+content_margin_left = 8.0
+content_margin_top = 8.0
+content_margin_right = 8.0
+content_margin_bottom = 8.0
+bg_color = Color(0.2592937, 0.2592937, 0.25929374, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.19076243, 0.19076228, 0.19076234, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0wfyh"]
+content_margin_left = 8.0
+content_margin_top = 8.0
+content_margin_right = 8.0
+content_margin_bottom = 8.0
+draw_center = false
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.19076243, 0.19076228, 0.19076234, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_sugp2"]
+content_margin_left = 8.0
+content_margin_top = 8.0
+content_margin_right = 8.0
+content_margin_bottom = 8.0
+bg_color = Color(0.038397167, 0.038397167, 0.03839716, 1)
+draw_center = false
+
+[node name="Main" type="Control" unique_id=381221898]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_o5qli")
+
+[node name="Panel" type="Panel" parent="." unique_id=329546444]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_o5qli")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="." unique_id=1529794393]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = -2
+alignment = 1
+
+[node name="Left" type="Control" parent="HBoxContainer" unique_id=794769991]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+
+[node name="Panel" type="Panel" parent="HBoxContainer/Left" unique_id=343698031]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_sgp6g")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer/Left" unique_id=1381540992]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="HBoxContainer/Left/VBoxContainer" unique_id=2037820544]
+layout_mode = 2
+theme_override_constants/separation = -2
+
+[node name="AddServerButton" type="Button" parent="HBoxContainer/Left/VBoxContainer/HBoxContainer" unique_id=843557611]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/normal = SubResource("StyleBoxFlat_jyhfs")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_tbgi4")
+theme_override_styles/hover = SubResource("StyleBoxFlat_tefeu")
+text = "Add Server"
+
+[node name="SaveServerButton" type="Button" parent="HBoxContainer/Left/VBoxContainer/HBoxContainer" unique_id=1966692682]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 15
+theme_override_styles/normal = SubResource("StyleBoxFlat_jyhfs")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_tbgi4")
+theme_override_styles/hover = SubResource("StyleBoxFlat_tefeu")
+text = "Save"
+
+[node name="ServerList" type="ItemList" parent="HBoxContainer/Left/VBoxContainer" unique_id=36020492]
+unique_name_in_owner = true
+layout_mode = 2
+auto_height = true
+fixed_icon_size = Vector2i(32, 32)
+
+[node name="Chat" type="Control" parent="HBoxContainer" unique_id=673002339]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="ChatText" type="RichTextLabel" parent="HBoxContainer/Chat" unique_id=418569456]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 0.88900006
+offset_bottom = -0.072021484
+focus_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_sgp6g")
+bbcode_enabled = true
+scroll_following = true
+selection_enabled = true
+
+[node name="TextInput" type="TextEdit" parent="HBoxContainer/Chat" unique_id=22997635]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.88600004
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -0.12805176
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_sgp6g")
+placeholder_text = "Type here..."
+tab_input_mode = false
+scroll_smooth = true
+draw_control_chars = true
+draw_tabs = true
+script = ExtResource("2_0wfyh")
+
+[node name="Right" type="Control" parent="HBoxContainer" unique_id=1321769987]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer/Right" unique_id=372471568]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = -2
+
+[node name="Server" type="Label" parent="HBoxContainer/Right/VBoxContainer" unique_id=1683348517]
+custom_minimum_size = Vector2(0, 32)
+layout_mode = 2
+text = "Server"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="StatusLabel" type="RichTextLabel" parent="HBoxContainer/Right/VBoxContainer" unique_id=217508041]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+theme_override_font_sizes/normal_font_size = 12
+theme_override_styles/normal = SubResource("StyleBoxFlat_0wfyh")
+bbcode_enabled = true
+text = "[color=red]Not connected to a server[/color]"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="HBoxContainer/Right/VBoxContainer" unique_id=1454219837]
+layout_mode = 2
+theme_override_constants/separation = -2
+
+[node name="ConnectionButton" type="Button" parent="HBoxContainer/Right/VBoxContainer/HBoxContainer" unique_id=478556616]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 15
+theme_override_styles/normal = SubResource("StyleBoxFlat_jyhfs")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_tbgi4")
+theme_override_styles/hover = SubResource("StyleBoxFlat_tefeu")
+text = "Disconnect"
+
+[node name="ClearButton" type="Button" parent="HBoxContainer/Right/VBoxContainer/HBoxContainer" unique_id=2133554446]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 15
+theme_override_styles/normal = SubResource("StyleBoxFlat_jyhfs")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_tbgi4")
+theme_override_styles/hover = SubResource("StyleBoxFlat_tefeu")
+text = "Clear"
+
+[node name="Label" type="Label" parent="HBoxContainer/Right/VBoxContainer" unique_id=587101334]
+custom_minimum_size = Vector2(0, 32)
+layout_mode = 2
+text = "Users"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Panel" type="Panel" parent="HBoxContainer/Right/VBoxContainer" unique_id=1874636505]
+custom_minimum_size = Vector2(200, 300)
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_sgp6g")
+
+[node name="UserList" type="ItemList" parent="HBoxContainer/Right/VBoxContainer/Panel" unique_id=1370534507]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_sugp2")
+auto_height = true
+
+[node name="AuthPopup" type="Control" parent="." unique_id=1833147127]
+visible = false
+layout_mode = 1
+anchor_left = 0.28100002
+anchor_top = 0.30900002
+anchor_right = 0.71900004
+anchor_bottom = 0.69100004
+offset_left = 0.28796387
+offset_top = -0.23200989
+offset_right = -0.2880249
+offset_bottom = 0.23196411
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("3_sugp2")
+
+[node name="Panel" type="Panel" parent="AuthPopup" unique_id=1876414827]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_o5qli")
+
+[node name="MarginContainer" type="MarginContainer" parent="AuthPopup" unique_id=1892414217]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 16
+
+[node name="VBoxContainer" type="VBoxContainer" parent="AuthPopup/MarginContainer" unique_id=105117127]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="AuthPopup/MarginContainer/VBoxContainer" unique_id=72532395]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "This server requires logging in"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Label2" type="Label" parent="AuthPopup/MarginContainer/VBoxContainer" unique_id=959450815]
+custom_minimum_size = Vector2(0, 24)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.601223, 0.601223, 0.60122293, 1)
+theme_override_font_sizes/font_size = 13
+text = "If you don't have an account, this will create one"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="LineEditUser" type="LineEdit" parent="AuthPopup/MarginContainer/VBoxContainer" unique_id=1102831732]
+layout_mode = 2
+placeholder_text = "Username"
+clear_button_enabled = true
+
+[node name="LineEditPass" type="LineEdit" parent="AuthPopup/MarginContainer/VBoxContainer" unique_id=1912105983]
+layout_mode = 2
+placeholder_text = "Password"
+clear_button_enabled = true
+caret_blink = true
+secret = true
+
+[node name="LineEditPass2" type="LineEdit" parent="AuthPopup/MarginContainer/VBoxContainer" unique_id=1809706115]
+layout_mode = 2
+placeholder_text = "Confirm Password"
+clear_button_enabled = true
+caret_blink = true
+secret = true
+
+[node name="HBoxContainer" type="HBoxContainer" parent="AuthPopup/MarginContainer/VBoxContainer" unique_id=45156465]
+layout_mode = 2
+alignment = 1
+
+[node name="OKButton" type="Button" parent="AuthPopup/MarginContainer/VBoxContainer/HBoxContainer" unique_id=1710359744]
+layout_mode = 2
+text = "OK"
+
+[node name="CancelButton" type="Button" parent="AuthPopup/MarginContainer/VBoxContainer/HBoxContainer" unique_id=1937466847]
+layout_mode = 2
+text = "Cancel"
+
+[node name="AddServerPopup" type="Control" parent="." unique_id=1862321782]
+visible = false
+layout_mode = 1
+anchor_left = 0.28100002
+anchor_top = 0.30900002
+anchor_right = 0.71900004
+anchor_bottom = 0.69100004
+offset_left = 0.28796387
+offset_top = -0.23200989
+offset_right = -0.2880249
+offset_bottom = 0.23196411
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("4_jyhfs")
+
+[node name="Panel" type="Panel" parent="AddServerPopup" unique_id=863497988]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_o5qli")
+
+[node name="MarginContainer" type="MarginContainer" parent="AddServerPopup" unique_id=615838097]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 16
+
+[node name="VBoxContainer" type="VBoxContainer" parent="AddServerPopup/MarginContainer" unique_id=1912642194]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="AddServerPopup/MarginContainer/VBoxContainer" unique_id=816009662]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "Add new server"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="LineEditAddr" type="LineEdit" parent="AddServerPopup/MarginContainer/VBoxContainer" unique_id=1181829516]
+layout_mode = 2
+placeholder_text = "Address"
+clear_button_enabled = true
+
+[node name="LineEditPort" type="LineEdit" parent="AddServerPopup/MarginContainer/VBoxContainer" unique_id=313759947]
+layout_mode = 2
+placeholder_text = "Port"
+clear_button_enabled = true
+caret_blink = true
+
+[node name="HBoxContainer" type="HBoxContainer" parent="AddServerPopup/MarginContainer/VBoxContainer" unique_id=1144864821]
+layout_mode = 2
+alignment = 1
+
+[node name="OKButton" type="Button" parent="AddServerPopup/MarginContainer/VBoxContainer/HBoxContainer" unique_id=1639843681]
+layout_mode = 2
+text = "OK"
+
+[node name="CancelButton" type="Button" parent="AddServerPopup/MarginContainer/VBoxContainer/HBoxContainer" unique_id=1136094852]
+layout_mode = 2
+text = "Cancel"
+
+[connection signal="pressed" from="HBoxContainer/Left/VBoxContainer/HBoxContainer/AddServerButton" to="." method="_on_add_server_button_pressed"]
+[connection signal="pressed" from="HBoxContainer/Left/VBoxContainer/HBoxContainer/SaveServerButton" to="." method="_on_save_server_button_pressed"]
+[connection signal="item_activated" from="HBoxContainer/Left/VBoxContainer/ServerList" to="." method="_on_server_list_item_activated"]
+[connection signal="pressed" from="HBoxContainer/Right/VBoxContainer/HBoxContainer/ConnectionButton" to="." method="_on_connection_button_pressed"]
+[connection signal="pressed" from="HBoxContainer/Right/VBoxContainer/HBoxContainer/ClearButton" to="." method="_on_clear_button_pressed"]
+[connection signal="pressed" from="AuthPopup/MarginContainer/VBoxContainer/HBoxContainer/OKButton" to="AuthPopup" method="_on_ok_button_pressed"]
+[connection signal="pressed" from="AuthPopup/MarginContainer/VBoxContainer/HBoxContainer/CancelButton" to="AuthPopup" method="_on_cancel_button_pressed"]
+[connection signal="pressed" from="AddServerPopup/MarginContainer/VBoxContainer/HBoxContainer/OKButton" to="AddServerPopup" method="_on_ok_button_pressed"]
+[connection signal="pressed" from="AddServerPopup/MarginContainer/VBoxContainer/HBoxContainer/CancelButton" to="AddServerPopup" method="_on_cancel_button_pressed"]
