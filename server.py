@@ -75,15 +75,19 @@ CLIENTS_LOCK = threading.Lock()
 
 def main() -> None:
     print(f"[i] Server listening on port {PORT}")
+    print("[i] Press Ctrl+C to stop")
 
-    while True:
-        conn, addr = tcp_sock.accept()
+    try:
+        while True:
+            conn, addr = tcp_sock.accept()
 
-        threading.Thread(
-            target=handle_client,
-            args=(conn, addr),
-            daemon=True
-        ).start()
+            threading.Thread(
+                target=handle_client,
+                args=(conn, addr),
+                daemon=True
+            ).start()
+    except KeyboardInterrupt:
+        print("Stopping server...")
 
 def get_username(conn) -> str | None:
     send_json(conn, {
