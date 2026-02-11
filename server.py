@@ -23,11 +23,16 @@ if os.path.exists("config.yaml"):
         CONFIG = yaml.safe_load(f)
 else:
     with open("config.yaml", "w", encoding="utf-8") as f:
-        config_str = (
-        "--- GIchat Server Configuration\n"
-        "# Refer to https://github.com/HazmatPants/GIchat/wiki/config.yaml\n"
-        "# for configuration options\n"
-        )
+        r = requests.get("https://raw.githubusercontent.com/HazmatPants/GIchat/refs/heads/server/config.yaml")
+        if r.status_code == 200:
+            config_str = r.text
+        else:
+            config_str = (
+            "--- GIchat Server Configuration\n"
+            "# Refer to https://github.com/HazmatPants/GIchat/wiki/config.yaml\n"
+            "# for configuration options\n"
+            )
+
         f.write(config_str)
 
         print(Fore.YELLOW + f"[!] Config file not found, it was created. Please read it.", Style.RESET_ALL)
