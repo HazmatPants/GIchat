@@ -5,6 +5,8 @@ var servers := {}
 var socket: StreamPeerTCP
 
 var username := "User"
+var target_host := "127.0.0.1"
+var target_port := 8765
 
 var users: PackedStringArray = []
 
@@ -16,10 +18,13 @@ var is_logged_in := false
 var last_ping := 0.0
 
 signal connected
+signal disconnected
+signal server_info_updated
 
 func _ready() -> void:
 	username += str(randi())
-	connect_to_server()
+
+	load_server_list()
 
 func connect_to_server(host: String = "127.0.0.1", port: int=8765):
 	socket = StreamPeerTCP.new()
@@ -36,6 +41,7 @@ func print_out(text: String, end="\n") -> void:
 var ping_timer: float = 0.0
 
 func _process(delta: float) -> void:
+	if not socket: return
 	socket.poll()
 	update_status()
 
@@ -66,34 +72,34 @@ func handle_message(msg: Dictionary) -> void:
 					})
 				"auth":
 					$AuthPopup.show()
-					playsound(preload("res://assets/sounds/join.wav"))
+					GLOBAL.playsound(preload("res://assets/sounds/join.wav"))
 		"users":
 			is_logged_in = true
 			connected.emit()
 			users = msg.get("users", [])
 			update_userlist()
-			playsound(preload("res://assets/sounds/connect.wav"))
+			GLOBAL.playsound(preload("res://assets/sounds/connect.wav"))
 		"message":
 			if username == msg["user"]:
 				print_out("<YOU> %s" % msg["body"])
-				playsound(preload("res://assets/sounds/send.wav"))
+				GLOBAL.playsound(preload("res://assets/sounds/send_done.wav"))
 			else:
 				print_out("<%s> %s" % [msg["user"], msg["body"]])
-				playsound(preload("res://assets/sounds/receive.wav"))
+				GLOBAL.playsound(preload("res://assets/sounds/receive.wav"))
 		"join":
 			var user = msg.get("user")
 			print_out("[color=gray]>>> %s joined[/color]" % msg["user"])
 			if user and not users.has(user):
 				users.append(user)
 			update_userlist()
-			playsound(preload("res://assets/sounds/join.wav"))
+			GLOBAL.playsound(preload("res://assets/sounds/join.wav"))
 		"leave":
 			var user = msg.get("user")
 			print_out("[color=gray]>>> %s left[/color]" % msg["user"])
 			if user and users.has(user):
 				users.erase(user)
 			update_userlist()
-			playsound(preload("res://assets/sounds/leave.wav"))
+			GLOBAL.playsound(preload("res://assets/sounds/leave.wav"))
 		"motd":
 			%ChatText.add_hr()
 			%ChatText.newline()
@@ -105,23 +111,20 @@ func handle_message(msg: Dictionary) -> void:
 			%ChatText.newline()
 		"error":
 			print_out("[color=red]Error! %s[/color]" % msg.get("body"))
-			playsound(preload("res://assets/sounds/leave.wav"))
+			GLOBAL.playsound(preload("res://assets/sounds/leave.wav"))
 		"success":
 			print_out("[color=green]%s[/color]" % msg.get("body"))
-			playsound(preload("res://assets/sounds/join.wav"))
+			GLOBAL.playsound(preload("res://assets/sounds/join.wav"))
 		"ping":
 			var now = Time.get_unix_time_from_system()
 			update_status()
-			last_ping = snappedf((now - msg.get("body")) * 1000, 0.1)
+			last_ping = snappedf((msg.get("body") - now), 0.1)
 		"server_info":
 			server_info = msg
+			server_info_updated.emit()
 			var icon = msg.get("icon")
-			var bytes = Marshalls.base64_to_raw(icon)
-			var img := Image.new()
-			if img.load_png_from_buffer(bytes) != OK:
-				return
-
-			server_icon = ImageTexture.create_from_image(img)
+			if icon:
+				load_server_icon(icon)
 
 func update_status():
 	match socket.get_status():
@@ -154,10 +157,13 @@ func update_userlist():
 		%UserList.add_item(user)
 
 func _on_connection_button_pressed() -> void:
+	if not socket:
+		print_out("[color=red]No server selected![/color]")
+		return
 	if socket.get_status() == 2:
 		disconnect_from_server()
 	elif socket.get_status() == 0:
-		connect_to_server()
+		connect_to_server(target_host, target_port)
 		update_status()
 
 func send(message: String) -> void:
@@ -168,6 +174,8 @@ func send(message: String) -> void:
 	}
 	send_json(data)
 	%TextInput.text = ""
+
+	GLOBAL.playsound(preload("res://assets/sounds/send.wav"))
 
 func recv_line() -> String:
 	var data := ""
@@ -191,7 +199,7 @@ func send_json(data: Dictionary) -> void:
 	var json = JSON.stringify(data)
 	var err = socket.put_data((json + "\n").to_utf8_buffer())
 	if err != OK:
-		push_error("Error seconding packet: ", error_string(err))
+		push_error("Error sending packet: ", error_string(err))
 
 var recv_buffer := ""
 
@@ -214,33 +222,31 @@ func recv_json() -> Dictionary:
 		recv_buffer += result[1].get_string_from_utf8()
 	return {}
 
-func playsound(stream: AudioStream) -> void:
-	var ap := AudioStreamPlayer.new()
-	ap.stream = stream
-	ap.autoplay = true
-	ap.finished.connect(ap.queue_free)
-	add_child(ap)
-
 func _on_clear_button_pressed() -> void:
 	%ChatText.text = ""
 
 func disconnect_from_server():
+	if not socket: return
 	if not socket.get_status() == StreamPeerTCP.STATUS_CONNECTED: return
 	socket.disconnect_from_host()
 	users = []
 	update_userlist()
-	playsound(preload("res://assets/sounds/disconnect.wav"))
+	GLOBAL.playsound(preload("res://assets/sounds/disconnect.wav"))
 	is_logged_in = false
 	update_status()
+	disconnected.emit()
 
 func save_server():
+	if not is_logged_in:
+		print_out("[color=red]Not connected to a server![/color]")
+		return
 	var data = {
 		"name": server_info["name"],
 		"description": server_info["description"],
 		"addr": server_info["addr"],
 		"port": int(server_info["port"])
 	}
-	servers[servers.size()] = data
+	servers[server_info["name"]] = data
 
 	%ServerList.add_item(server_info["name"], server_icon)
 	print_out("Saved server %s" % server_info["name"])
@@ -252,24 +258,82 @@ func add_server(addr: String, port: int):
 		"addr": addr,
 		"port": port
 	}
-	servers[servers.size()] = data
 
 	connect_to_server(addr, port)
-	await connected
+	await server_info_updated
 
 	$AddServerPopup.hide()
 
-	%ServerList.add_item(server_info["name"], server_icon)
-	print_out("Saved server %s" % server_info["name"])
+	var server_name = server_info["name"]
+	data["name"] = server_name
+
+	load_server_icon(server_info["icon"])
+
+	servers[server_name] = data
+	%ServerList.add_item(server_name, server_icon)
+
+func load_server_icon(b64: String):
+	var bytes = Marshalls.base64_to_raw(b64)
+	var img := Image.new()
+	if img.load_png_from_buffer(bytes) != OK:
+		return
+
+	server_icon = ImageTexture.create_from_image(img)
+	DirAccess.make_dir_absolute(ProjectSettings.globalize_path("user://icons"))
+	img.save_png("user://icons/%s_icon.png" % server_info["name"])
+func add_server_from_list(addr: String, port: int, server_name: String, icon: Texture2D):
+	var data = {
+		"name": server_name,
+		"description": "",
+		"addr": addr,
+		"port": port
+	}
+	servers[server_name] = data
+
+	%ServerList.add_item(server_name, icon)
+
+func save_server_list():
+	var cfg = ConfigFile.new()
+
+	for server in servers.keys():
+		cfg.set_value(servers[server]["name"], "addr", servers[server]["addr"])
+		cfg.set_value(servers[server]["name"], "port", servers[server]["port"])
+
+	var err = cfg.save("user://server_list.ini")
+
+	if err != OK:
+		GLOBAL.create_notification("Error saving server list! %s" % error_string(err), Color.RED)
+	else:
+		print("saved server list")
+
+func load_server_list():
+	var cfg = ConfigFile.new()
+
+	var err = cfg.load("user://server_list.ini")
+
+	for server in cfg.get_sections():
+		var addr = cfg.get_value(server, "addr")
+		var port = cfg.get_value(server, "port")
+		var img = Image.load_from_file("user://icons/%s_icon.png" % server)
+		var texture := ImageTexture.create_from_image(img)
+		add_server_from_list(addr, port, server, texture)
+
+	if err != OK:
+		GLOBAL.create_notification("Error loading server list! %s" % error_string(err), Color.RED)
 
 func _on_server_list_item_activated(index: int) -> void:
 	disconnect_from_server()
-	var host = servers[index]["addr"]
-	var port = servers[index]["port"]
-	connect_to_server(host, port)
+	var server_name = %ServerList.get_item_text(index)
+	target_host = servers[server_name]["addr"]
+	target_port = servers[server_name]["port"]
+	connect_to_server(target_host, target_port)
 
 func _on_save_server_button_pressed() -> void:
 	save_server()
+	save_server_list()
 
 func _on_add_server_button_pressed() -> void:
 	$AddServerPopup.show()
+
+func _on_settings_button_pressed() -> void:
+	$SettingsPopup.show()

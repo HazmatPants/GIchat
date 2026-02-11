@@ -15,6 +15,10 @@ run/main_scene="res://scenes/main.tscn"
 config/features=PackedStringArray("4.6", "Forward Plus")
 config/icon="uid://hln5jycnlttl"
 
+[autoload]
+
+GLOBAL="*uid://iqucblbob1vy"
+
 [physics]
 
 3d/physics_engine="Jolt Physics"
