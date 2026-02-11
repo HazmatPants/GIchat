@@ -20,3 +20,6 @@ The server and client are on separate branches in this repo, [client](https://gi
 
 ## Notes
 - There is currently **no encryption**. Messages are sent as plaintext JSON.
+
+## Gallery
+![alt text](/repo-assets/screenshot_3.0.0.png)<br>
