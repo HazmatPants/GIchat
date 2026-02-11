@@ -50,8 +50,9 @@ def load_server_icon(path="server_icon.png") -> str | None:
 
 SERVER_ICON = load_server_icon()
 
-if len(SERVER_ICON) > 100_000:
-    print(Fore.YELLOW + f"[!] Server icon is quite large ({round(len(SERVER_ICON) / 1024)} KiB), a size of 256x256 is recommended", Style.RESET_ALL)
+if SERVER_ICON:
+    if len(SERVER_ICON) > 100_000:
+        print(Fore.YELLOW + f"[!] Server icon is quite large ({round(len(SERVER_ICON) / 1024)} KiB), a size of 256x256 is recommended", Style.RESET_ALL)
 
 r = requests.get("https://icanhazip.com")
 if r.status_code == 200:
