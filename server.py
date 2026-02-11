@@ -29,7 +29,7 @@ else:
         else:
             config_str = (
             "--- GIchat Server Configuration\n"
-            "# Refer to https://github.com/HazmatPants/GIchat/wiki/config.yaml\n"
+            "# Refer to https://github.com/HazmatPants/GIchat/wiki/Server-Configuration\n"
             "# for configuration options\n"
             )
 
