@@ -124,7 +124,8 @@ func handle_message(msg: Dictionary) -> void:
 			server_info_updated.emit()
 			var icon = msg.get("icon")
 			if icon:
-				load_server_icon(icon)
+				server_icon = load_server_icon(server_info["icon"])
+			DisplayServer.window_set_title("GIchat Client - " + server_info["name"])
 
 func update_status():
 	match socket.get_status():
@@ -266,8 +267,9 @@ func add_server(addr: String, port: int):
 
 	var server_name = server_info["name"]
 	data["name"] = server_name
+	data["description"] = server_info["description"]
 
-	load_server_icon(server_info["icon"])
+	server_icon = load_server_icon(server_info["icon"])
 
 	servers[server_name] = data
 	%ServerList.add_item(server_name, server_icon)
@@ -278,13 +280,15 @@ func load_server_icon(b64: String):
 	if img.load_png_from_buffer(bytes) != OK:
 		return
 
-	server_icon = ImageTexture.create_from_image(img)
 	DirAccess.make_dir_absolute(ProjectSettings.globalize_path("user://icons"))
 	img.save_png("user://icons/%s_icon.png" % server_info["name"])
-func add_server_from_list(addr: String, port: int, server_name: String, icon: Texture2D):
+
+	return ImageTexture.create_from_image(img)
+
+func add_server_from_list(addr: String, port: int, server_name: String, icon: Texture2D, server_desc: String):
 	var data = {
 		"name": server_name,
-		"description": "",
+		"description": server_desc,
 		"addr": addr,
 		"port": port
 	}
@@ -298,6 +302,7 @@ func save_server_list():
 	for server in servers.keys():
 		cfg.set_value(servers[server]["name"], "addr", servers[server]["addr"])
 		cfg.set_value(servers[server]["name"], "port", servers[server]["port"])
+		cfg.set_value(servers[server]["name"], "desc", servers[server]["description"])
 
 	var err = cfg.save("user://server_list.ini")
 
@@ -314,9 +319,10 @@ func load_server_list():
 	for server in cfg.get_sections():
 		var addr = cfg.get_value(server, "addr")
 		var port = cfg.get_value(server, "port")
+		var desc = cfg.get_value(server, "desc", "")
 		var img = Image.load_from_file("user://icons/%s_icon.png" % server)
 		var texture := ImageTexture.create_from_image(img)
-		add_server_from_list(addr, port, server, texture)
+		add_server_from_list(addr, port, server, texture, desc)
 
 	if err != OK:
 		GLOBAL.create_notification("Error loading server list! %s" % error_string(err), Color.RED)

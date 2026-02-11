@@ -7,8 +7,10 @@
 [ext_resource type="Texture2D" uid="uid://m1fdvty2nwc2" path="res://assets/textures/signal.svg" id="3_85g3d"]
 [ext_resource type="Script" uid="uid://0fgoo54vdx70" path="res://scripts/auth.gd" id="3_sugp2"]
 [ext_resource type="Script" uid="uid://dvdtujrq6j8cl" path="res://scripts/add_server.gd" id="4_jyhfs"]
+[ext_resource type="Texture2D" uid="uid://cjcw4sditk35r" path="res://assets/textures/question.svg" id="4_ya4ey"]
 [ext_resource type="Script" uid="uid://danrvu3ms3k33" path="res://scripts/settings.gd" id="6_tefeu"]
 [ext_resource type="Texture2D" uid="uid://cowcviwlpyd56" path="res://assets/textures/x.svg" id="7_o6xl0"]
+[ext_resource type="Script" uid="uid://pe80hpksbsmf" path="res://scripts/server_info.gd" id="10_choun"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_eb6dy"]
 content_margin_left = 8.0
@@ -121,6 +123,10 @@ border_width_top = 2
 border_width_right = 2
 border_width_bottom = 2
 border_color = Color(0.19076243, 0.19076228, 0.19076234, 1)
+expand_margin_left = 16.0
+expand_margin_top = 16.0
+expand_margin_right = 16.0
+expand_margin_bottom = 16.0
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_trceg"]
 content_margin_left = 8.0
@@ -264,15 +270,19 @@ fixed_icon_size = Vector2i(32, 32)
 script = ExtResource("2_tipki")
 
 [node name="PopupMenu" type="PopupMenu" parent="HBoxContainer/Left/ServerList" unique_id=1835055395]
-size = Vector2i(103, 35)
-theme_override_constants/icon_max_width = 8
-item_count = 2
+oversampling_override = 1.0
+size = Vector2i(104, 89)
+theme_override_constants/icon_max_width = 16
+item_count = 3
 item_0/text = "Connect"
 item_0/icon = ExtResource("3_85g3d")
 item_0/id = 0
-item_1/text = "Remove"
-item_1/icon = ExtResource("7_o6xl0")
+item_1/text = "Info"
+item_1/icon = ExtResource("4_ya4ey")
 item_1/id = 1
+item_2/text = "Remove"
+item_2/icon = ExtResource("7_o6xl0")
+item_2/id = 2
 
 [node name="Panel2" type="Panel" parent="HBoxContainer/Left" unique_id=1990979321]
 custom_minimum_size = Vector2(0, 73.68)
@@ -620,6 +630,33 @@ custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
 placeholder_text = "Username"
 
+[node name="Audio" type="Control" parent="SettingsPopup/TabContainer" unique_id=388414487]
+visible = false
+layout_mode = 2
+metadata/_tab_index = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="SettingsPopup/TabContainer/Audio" unique_id=592196434]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="SettingsPopup/TabContainer/Audio/VBoxContainer" unique_id=836325576]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="SettingsPopup/TabContainer/Audio/VBoxContainer/HBoxContainer" unique_id=1797036101]
+layout_mode = 2
+text = "SFX Volume"
+
+[node name="VolumeSlider" type="HSlider" parent="SettingsPopup/TabContainer/Audio/VBoxContainer/HBoxContainer" unique_id=1346150389]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+max_value = 1.0
+step = 0.05
+tick_count = 20
+ticks_on_borders = true
+ticks_position = 3
+
 [node name="SettingsCloseButton" type="Button" parent="SettingsPopup" unique_id=432813554]
 layout_mode = 1
 anchors_preset = 1
@@ -635,6 +672,57 @@ icon = ExtResource("7_o6xl0")
 icon_alignment = 1
 expand_icon = true
 
+[node name="ServerInfoPopup" type="Control" parent="." unique_id=1005317517]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+anchor_left = 0.21300001
+anchor_top = 0.082
+anchor_right = 0.78700006
+anchor_bottom = 0.91800004
+offset_left = -0.37602234
+offset_top = -0.13600159
+offset_right = 0.37591553
+offset_bottom = 0.13598633
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("10_choun")
+
+[node name="Panel" type="Panel" parent="ServerInfoPopup" unique_id=371013045]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_o5qli")
+
+[node name="RichTextLabel" type="RichTextLabel" parent="ServerInfoPopup" unique_id=590193301]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+bbcode_enabled = true
+horizontal_alignment = 1
+
+[node name="OKButton" type="Button" parent="ServerInfoPopup" unique_id=1577126008]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.915
+anchor_right = 0.5
+anchor_bottom = 0.915
+offset_left = -15.5
+offset_top = -15.696014
+offset_right = 15.5
+offset_bottom = 15.303986
+grow_horizontal = 2
+grow_vertical = 0
+text = "OK"
+
 [connection signal="connected" from="." to="SettingsPopup" method="_on_connected"]
 [connection signal="disconnected" from="." to="SettingsPopup" method="_on_disconnected"]
 [connection signal="pressed" from="HBoxContainer/Left/HBoxContainer/AddServerButton" to="." method="_on_add_server_button_pressed"]
@@ -649,4 +737,6 @@ expand_icon = true
 [connection signal="pressed" from="AuthPopup/MarginContainer/VBoxContainer/HBoxContainer/CancelButton" to="AuthPopup" method="_on_cancel_button_pressed"]
 [connection signal="pressed" from="AddServerPopup/MarginContainer/VBoxContainer/HBoxContainer/OKButton" to="AddServerPopup" method="_on_ok_button_pressed"]
 [connection signal="pressed" from="AddServerPopup/MarginContainer/VBoxContainer/HBoxContainer/CancelButton" to="AddServerPopup" method="_on_cancel_button_pressed"]
+[connection signal="value_changed" from="SettingsPopup/TabContainer/Audio/VBoxContainer/HBoxContainer/VolumeSlider" to="SettingsPopup" method="_on_volume_slider_value_changed"]
 [connection signal="pressed" from="SettingsPopup/SettingsCloseButton" to="SettingsPopup" method="_on_settings_close_button_pressed"]
+[connection signal="pressed" from="ServerInfoPopup/OKButton" to="ServerInfoPopup" method="_on_ok_button_pressed"]

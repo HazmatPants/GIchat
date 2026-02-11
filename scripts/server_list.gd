@@ -14,6 +14,10 @@ func _on_popup_menu_id_pressed(id: int) -> void:
 			owner._on_server_list_item_activated(clicked_idx)
 		1:
 			var server_name = get_item_text(clicked_idx)
+			var server_desc = owner.servers[server_name]["description"]
+			%ServerInfoPopup.show_info(server_name, server_desc)
+		2:
+			var server_name = get_item_text(clicked_idx)
 			owner.servers.erase(server_name)
 			remove_item(clicked_idx)
 			owner.save_server_list()
