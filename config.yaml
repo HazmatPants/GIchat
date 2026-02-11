@@ -1,0 +1,70 @@
+--- # GIchat Server Configuration
+
+#####################
+#
+# This is the default config file, please edit it to your liking
+#
+#####################
+
+name: GIchat Server
+description: This is a GIchat server
+
+# Maximum number of users allowed to connect at once
+# Any users trying to join past this amount will be denied
+max_users: 10
+
+# If true, making an account is required to connect
+login_required: false
+
+# A list of MOTD messages
+# When a client connects, one will be chosen at random and sent to them
+# This can be omitted if you don't want any MOTDs
+# MOTD supports BBCode formatting, it will be rendered on the client
+motd:
+    - |
+        [color=gray]Be nice. Have fun. No griefing.[/color]
+    - |
+        [color=gray]Welcome to the server![/color]
+    - |
+        [color=gray]You're connected! Say hi![/color]
+
+# What BBCode formatting tags are users allowed to use?
+# Make sure to include closing tags (e.g. /b)
+# and omit the square brackets []
+allowed_bbcode:
+    - b
+    - /b
+    - i
+    - /i
+    - color
+    - /color
+
+# Should admins be allowed to use all BBCode tags?
+admin_ignore_bbcode_whitelist: true
+
+# Characters that are not allowed to be in usernames
+username_char_blacklist:
+    - "!"
+    - "\""
+    - "£"
+    - "$"
+    - "%"
+    - "^"
+    - "&"
+    - "*"
+    - "("
+    - ")"
+    - "["
+    - "]"
+    - "{"
+    - "}"
+    - "\\"
+    - "|"
+    - "#"
+    - "~"
+    - "/"
+    - "?"
+    - "`"
+    - "¬"
+    - "@"
+    - "'"
